@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voiceradarflutter/components/UserCard.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,7 +14,7 @@ class _HomePageState extends State<HomePage> {
     return const Center(
       child: Column(
         children: [
-          
+          UserCard(id: 0)
         ],
       ),
     );

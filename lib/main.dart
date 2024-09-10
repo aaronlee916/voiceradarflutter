@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voiceradarflutter/pages/HomePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text("Hello World!")]),
+            children: [HomePage()]),
       ),
     );
   }
