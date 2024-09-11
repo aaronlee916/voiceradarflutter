@@ -1,10 +1,11 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class UserCard extends StatefulWidget {
-  final int id;
+  final dynamic id;
 
   const UserCard({super.key, required this.id});
 
@@ -13,54 +14,43 @@ class UserCard extends StatefulWidget {
 }
 
 class _UserCardState extends State<UserCard> {
-  Uint8List? _imageBytes;
-  bool _isLoading = true;
-  bool _hasError = false;
+  Uint8List? avatarByte;
 
   @override
   void initState() {
     super.initState();
-    _fetchAvatar(widget.id);
+    getAvatar();
   }
 
-  Future<void> _fetchAvatar(int id) async {
+  void getAvatar() async {
     try {
-      final response = await http.get(Uri.parse("https://voiceradarserver.onrender.com/v1/getAvatar?id=$id"));
+      var response = await http.get(Uri.parse("https://voiceradarserver.onrender.com/v1/getAvatar?id=${widget.id}"));
       if (response.statusCode == 200) {
+        // Update the state with the new image data
         setState(() {
-          _imageBytes = response.bodyBytes;
-          _isLoading = false;
+          avatarByte = response.bodyBytes;
         });
       } else {
-        setState(() {
-          _hasError = true;
-          _isLoading = false;
-        });
+        // Handle the error response
+        print('Failed to load avatar: ${response.statusCode}');
       }
     } catch (e) {
-      setState(() {
-        _hasError = true;
-        _isLoading = false;
-      });
+      // Handle any exceptions
+      print('An error occurred while getting the avatar: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return Center(child: CircularProgressIndicator());
-    } else if (_hasError) {
-      return Center(child: Text('Failed to load avatar'));
-    } else if (_imageBytes != null) {
-      return Center(
-        child: Column(
-          children: [
-            Image.memory(_imageBytes!),
-          ],
-        ),
-      );
-    } else {
-      return Center(child: Text('No avatar available'));
-    }
+    return Center(
+      child: Column(
+        children: [
+          Image.memory(avatarByte!,
+          width: 100,
+          height: 100,
+          )
+        ],
+      )
+    );
   }
 }
