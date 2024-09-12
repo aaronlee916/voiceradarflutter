@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voiceradarflutter/components/ArtistSearch.dart';
 
 class findStaff extends StatefulWidget {
   const findStaff({super.key});
@@ -10,6 +11,15 @@ class findStaff extends StatefulWidget {
 class _findStaffState extends State<findStaff> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Center(
+      child: Column(
+        children: [
+          ArtistSearch(),
+          Text("人气STAFF")
+          
+        ],
+      ),
+      
+    );
   }
 }
