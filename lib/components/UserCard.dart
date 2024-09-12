@@ -45,9 +45,10 @@ class _UserCardState extends State<UserCard> {
     return Center(
       child: Column(
         children: [
-          Image.memory(avatarByte!,
-          width: 100,
-          height: 100,
+          SizedBox(
+            child: Image.memory(avatarByte!,
+            width: 100,
+            height: 100,),
           )
         ],
       )

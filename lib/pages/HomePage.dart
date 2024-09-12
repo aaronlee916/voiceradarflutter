@@ -12,33 +12,39 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int userLength = 0;
-  Future getUserLength() async {
-    var res = await http
-        .get(Uri.parse('https://voiceradarserver.onrender.com/v1/getAllUsers'));
-    userLength = json.decode(res.body).length;
+  List<dynamic> allUsers = []; // Use dynamic or define a User model class
+
+  Future<void> getUsers() async {
+    try {
+      var res = await http.get(Uri.parse('https://voiceradarserver.onrender.com/v1/getAllUsers'));
+      if (res.statusCode == 200) {
+        var decodedRes = json.decode(res.body);
+        if (decodedRes is List) {
+          setState(() {
+            allUsers = decodedRes; // Assuming the JSON is a list of user objects
+          });
+        } else {
+          print('Response is not a list');
+        }
+      } else {
+        print('Failed to load users. Status code: ${res.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching users: $e');
+    }
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getUserLength();
+    getUsers();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return SingleChildScrollView(
       child: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: userLength,
-              itemBuilder: (context, index) => UserCard(id: index),
-            ),
-          )
-        ],
+        children: allUsers.map((item) => UserCard(id: item["id"] as int)).toList(),
       ),
     );
   }
