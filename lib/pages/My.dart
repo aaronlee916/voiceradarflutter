@@ -10,6 +10,8 @@ class My extends StatefulWidget {
 class _MyState extends State<My> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Center(
+      child: Text("This is My Page"),
+    );
   }
 }

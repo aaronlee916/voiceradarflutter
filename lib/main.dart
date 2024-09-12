@@ -19,12 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: DefaultTabController(
-        length: 3, // 需要与tabs的数量一致
-        child: MyHomePage(
-          title: "首页",
-        ),
-      ),
+      home: MyHomePage(title: "你好")
     );
   }
 }
@@ -38,6 +33,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final PageController _pageController = PageController();
+  void _onItemTapped(int index) {
+    setState(() {
+      currTab = index;
+    });
+    _pageController.jumpToPage(index);
+  }
+
+  List<Widget> _pages = [
+    HomePage(),
+    Search(),
+    My(),
+  ];
+  int currTab = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,13 +54,23 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: const HomePage(),
-      bottomNavigationBar:
-          BottomNavigationBar(items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: '首页'),
-        BottomNavigationBarItem(icon: Icon(Icons.search), label: '搜索'),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: '我的')
-      ]),
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            currTab = index;
+          });
+        },
+        children: _pages,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: currTab,
+          onTap: _onItemTapped,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: '首页'),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: '搜索'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: '我的')
+          ]),
     );
   }
 }

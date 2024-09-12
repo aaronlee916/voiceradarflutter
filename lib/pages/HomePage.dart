@@ -13,17 +13,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<UserModel> allUsers = []; // 确保列表只包含UserModel类型的对象
 
+  
+
+  List<UserModel> allUsers = []; // 确保列表只包含UserModel类型的对象
   Future<void> getUsers() async {
     try {
-      var res = await http.get(Uri.parse('https://voiceradarserver.onrender.com/v1/getAllUsers'));
+      var res = await http.get(
+          Uri.parse('https://voiceradarserver.onrender.com/v1/getAllUsers'));
       if (res.statusCode == 200) {
         var decodedRes = json.decode(res.body);
         if (decodedRes is List) {
           setState(() {
             // 将每个元素从Map转换为UserModel对象
-            allUsers = decodedRes.map<UserModel>((item) => UserModel.fromJson(item)).toList();
+            allUsers = decodedRes
+                .map<UserModel>((item) => UserModel.fromJson(item))
+                .toList();
           });
         } else {
           print('Response is not a list');
