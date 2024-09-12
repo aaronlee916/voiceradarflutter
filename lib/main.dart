@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:voiceradarflutter/pages/HomePage.dart';
+import 'package:voiceradarflutter/pages/My.dart';
+import 'package:voiceradarflutter/pages/Search.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +19,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: DefaultTabController(
+        length: 3, // 需要与tabs的数量一致
+        child: MyHomePage(
+          title: "首页",
+        ),
+      ),
     );
   }
 }
@@ -38,11 +45,13 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [HomePage()]),
-      ),
+      body: const HomePage(),
+      bottomNavigationBar:
+          BottomNavigationBar(items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: '首页'),
+        BottomNavigationBarItem(icon: Icon(Icons.search), label: '搜索'),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: '我的')
+      ]),
     );
   }
 }
