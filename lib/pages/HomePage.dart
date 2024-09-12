@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<dynamic> allUsers = []; // Use dynamic or define a User model class
+  List<UserModel> allUsers = []; // 确保列表只包含UserModel类型的对象
 
   Future<void> getUsers() async {
     try {
@@ -22,7 +22,8 @@ class _HomePageState extends State<HomePage> {
         var decodedRes = json.decode(res.body);
         if (decodedRes is List) {
           setState(() {
-            allUsers = decodedRes; // Assuming the JSON is a list of user objects
+            // 将每个元素从Map转换为UserModel对象
+            allUsers = decodedRes.map<UserModel>((item) => UserModel.fromJson(item)).toList();
           });
         } else {
           print('Response is not a list');
@@ -45,7 +46,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        children: allUsers.map((item) => UserCard(user: item as UserModel)).toList(),
+        children: allUsers.map((user) => UserCard(user: user)).toList(),
       ),
     );
   }
