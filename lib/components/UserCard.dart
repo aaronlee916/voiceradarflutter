@@ -3,11 +3,12 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:voiceradarflutter/model/UserModel.dart';
 
 class UserCard extends StatefulWidget {
-  final dynamic id;
+  final UserModel user;
 
-  const UserCard({super.key, required this.id});
+  const UserCard({super.key, required UserModel this.user});
 
   @override
   State<UserCard> createState() => _UserCardState();
@@ -24,7 +25,7 @@ class _UserCardState extends State<UserCard> {
 
   void getAvatar() async {
     try {
-      var response = await http.get(Uri.parse("https://voiceradarserver.onrender.com/v1/getAvatar?id=${widget.id}"));
+      var response = await http.get(Uri.parse("https://voiceradarserver.onrender.com/v1/getAvatar?id=${widget.user.id}"));
       if (response.statusCode == 200) {
         // Update the state with the new image data
         setState(() {
@@ -48,8 +49,10 @@ class _UserCardState extends State<UserCard> {
           SizedBox(
             child: Image.memory(avatarByte!,
             width: 100,
-            height: 100,),
-          )
+            height: 100
+            ),
+          ),
+          Text(widget.user.name)
         ],
       )
     );
