@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:voiceradarflutter/model/UserModel.dart';
+import 'package:voiceradarflutter/pages/artistDetail.dart';
 
 class wideUserCard extends StatefulWidget {
   final UserModel user;
@@ -15,6 +16,19 @@ class wideUserCard extends StatefulWidget {
 
 class _wideUserCardState extends State<wideUserCard> {
   Uint8List? avatarByte;
+
+  void _navigateToDetails(BuildContext context) {
+    // 直接使用Navigator.push进行跳转，并传递参数
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => artistDetail(
+          user: widget.user,
+          avatarByte: avatarByte,
+        ),
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -43,15 +57,20 @@ class _wideUserCardState extends State<wideUserCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Column(
-      children: [
-        Column(children: [
-          Image.memory(avatarByte!, width: 100, height: 100),
-          Text(widget.user.name),
-          Text(widget.user.description)
-        ]),
-      ],
-    ));
+    return GestureDetector(
+      child: Center(
+          child: Column(
+        children: [
+          Column(children: [
+            Image.memory(avatarByte!, width: 100, height: 100),
+            Text(widget.user.name),
+            Text(widget.user.description)
+          ]),
+        ],
+      )),
+      onTap: () {
+        _navigateToDetails(context);
+      },
+    );
   }
 }
