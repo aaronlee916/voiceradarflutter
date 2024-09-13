@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:voiceradarflutter/components/wideUserCard.dart';
@@ -18,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> getUsers() async {
     try {
       var res = await http.get(
-          Uri.parse('https://voiceradarserver.onrender.com/v1/getAllUsers'));
+          Uri.parse('https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAllUsers'));
       if (res.statusCode == 200) {
         var decodedRes = json.decode(res.body);
         if (decodedRes is List) {

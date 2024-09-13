@@ -16,12 +16,12 @@ class rectUserCard extends StatefulWidget {
 
 class _rectUserCardState extends State<rectUserCard> {
   late UserModel user;
-  late Uint8List avatar;
+  late Uint8List? avatar;
 
   Future getUserInfo(int id) async {
-    var response = await http.get(Uri.parse("https://voiceradarserver.onrender.com/v1/getAllUsers"));
+    var response = await http.get(Uri.parse("https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAllUsers"));
     user=json.decode(response.body) as UserModel;
-    response=await http.get(Uri.parse("https://voiceradarserver.onrender.com/v1/getAvatar?id=${widget.id}"));
+    response=await http.get(Uri.parse("https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAvatar?id=${widget.id}"));
     avatar=response.bodyBytes;
   }
 
@@ -37,7 +37,7 @@ class _rectUserCardState extends State<rectUserCard> {
     return Center(
       child: Column(
         children: [
-          Image.memory(avatar),
+          Image.memory(avatar!),
           Text(user.name)
         ],
       ),
