@@ -13,8 +13,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<UserModel> allUsers = []; // 确保列表只包含UserModel类型的对象
+  List<UserModel> allUsers = [];
+  bool isLoading = true; // 新增一个标志位来表示是否正在加载数据
+
   Future<void> getUsers() async {
+    setState(() {
+      isLoading = true; // 开始加载数据
+    });
     try {
       var res = await http.get(
           Uri.parse('https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAllUsers'));
@@ -22,19 +27,28 @@ class _HomePageState extends State<HomePage> {
         var decodedRes = json.decode(res.body);
         if (decodedRes is List) {
           setState(() {
-            // 将每个元素从Map转换为UserModel对象
             allUsers = decodedRes
                 .map<UserModel>((item) => UserModel.fromJson(item))
                 .toList();
+            isLoading = false; // 数据加载完成
           });
         } else {
           print('Response is not a list');
+          setState(() {
+            isLoading = false; // 加载失败，但不再显示加载状态
+          });
         }
       } else {
         print('Failed to load users. Status code: ${res.statusCode}');
+        setState(() {
+          isLoading = false; // 加载失败，但不再显示加载状态
+        });
       }
     } catch (e) {
       print('Error fetching users: $e');
+      setState(() {
+        isLoading = false; // 加载失败，但不再显示加载状态
+      });
     }
   }
 
@@ -47,12 +61,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(children: [
-          ...allUsers.map((user) => wideUserCard(user: user)).toList()
-        ]),
-      ),
-      backgroundColor: Color.fromRGBO(250, 253, 255, 100),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator()) // 显示加载指示器
+          : SingleChildScrollView(
+              child: Column(
+                children: allUsers.isEmpty
+                    ? [const Center(child: Text('No users found'))] // 如果没有用户，显示消息
+                    : allUsers.map((user) => wideUserCard(user: user)).toList(),
+              ),
+            ),
+      backgroundColor: const Color.fromRGBO(250, 253, 255, 100),
     );
   }
 }
