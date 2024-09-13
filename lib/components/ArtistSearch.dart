@@ -11,6 +11,7 @@ class _ArtistSearchState extends State<ArtistSearch> {
   late SearchController _searchController;
   @override
   void initState() {
+    super.initState();
     // TODO: implement initState
     _searchController = SearchController();
   }

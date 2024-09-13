@@ -57,20 +57,54 @@ class _wideUserCardState extends State<wideUserCard> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Scaffold(
+      body: GestureDetector(
       child: Center(
           child: Column(
         children: [
-          Column(children: [
-            Image.memory(avatarByte!, width: 100, height: 100),
-            Text(widget.user.name),
-            Text(widget.user.description)
-          ]),
+          SizedBox(
+            width: 21.56 * 16,
+            height: 8.81 * 16,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  topRight: Radius.circular(8),
+                  bottomLeft: Radius.zero,
+                  bottomRight: Radius.zero),
+              child: Image.memory(
+                avatarByte!,
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.fromLTRB(10, 10, 265, 0),
+            width: 70,
+            child: Text(
+              widget.user.name,
+              style: const TextStyle(
+                  fontFamily: 'PingFang SC', fontSize: 16 * 0.88),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.fromLTRB(10, 10, 10, 49),
+            width: 325,
+            child: Text(
+              widget.user.description,
+              style: const TextStyle(
+                  fontFamily: 'PingFang SC',
+                  fontSize: 16 * 0.75,
+                  color: Color.fromRGBO(153, 153, 153, 100)),
+            ),
+          )
         ],
       )),
       onTap: () {
         _navigateToDetails(context);
       },
+    ),
     );
   }
 }
