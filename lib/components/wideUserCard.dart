@@ -1,20 +1,19 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:voiceradarflutter/model/UserModel.dart';
 
-class UserCard extends StatefulWidget {
+class wideUserCard extends StatefulWidget {
   final UserModel user;
 
-  const UserCard({super.key, required UserModel this.user});
+  const wideUserCard({super.key, required UserModel this.user});
 
   @override
-  State<UserCard> createState() => _UserCardState();
+  State<wideUserCard> createState() => _wideUserCardState();
 }
 
-class _UserCardState extends State<UserCard> {
+class _wideUserCardState extends State<wideUserCard> {
   Uint8List? avatarByte;
 
   @override

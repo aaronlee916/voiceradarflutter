@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:voiceradarflutter/components/UserCard.dart';
+import 'package:voiceradarflutter/components/wideUserCard.dart';
 import 'package:http/http.dart' as http;
 import 'package:voiceradarflutter/model/UserModel.dart';
 
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        children: allUsers.map((user) => UserCard(user: user)).toList(),
+        children: allUsers.map((user) => wideUserCard(user: user)).toList(),
       ),
     );
   }
