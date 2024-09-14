@@ -5,8 +5,8 @@ import 'package:voiceradarflutter/model/UserModel.dart';
 
 class artistDetail extends StatefulWidget {
   final UserModel user;
-  final Uint8List? avatarByte;
-  const artistDetail({super.key, required this.user, required this.avatarByte});
+  Uint8List? avatarByte;
+  artistDetail({super.key, required this.user, required this.avatarByte});
 
   @override
   State<artistDetail> createState() => _artistDetailState();

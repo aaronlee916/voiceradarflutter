@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class wideUserCard extends StatefulWidget {
 }
 
 class _wideUserCardState extends State<wideUserCard> {
+  File imageFile = new File('../assets/images/placeholder.png');
   Uint8List? avatarByte;
 
   void _navigateToDetails(BuildContext context) {
@@ -57,55 +59,74 @@ class _wideUserCardState extends State<wideUserCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
+    return SingleChildScrollView(
+      child: GestureDetector(
         child: Container(
-            width: 345,
-        height: 290,
-        decoration: const BoxDecoration(
-          boxShadow: [BoxShadow(offset: Offset(0, 4),color: Color.fromARGB(25, 221, 221, 208))]
-        ),
-            child: Column(
-          children: [
-            SizedBox(
-              width: 21.56 * 16,
-              height: 8.81 * 16,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
+          width: 345,
+          height: 250,
+          margin: EdgeInsets.only(bottom: 10),
+          decoration: const BoxDecoration(boxShadow: [
+            BoxShadow(
+                offset: Offset(0, 4), color: Color.fromARGB(25, 221, 221, 208))
+          ]),
+          child: Column(
+            children: [
+              SizedBox(
+                width: 21.56 * 16,
+                height: 8.81 * 16,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(8),
                     topRight: Radius.circular(8),
-                    bottomLeft: Radius.zero,
-                    bottomRight: Radius.zero),
-                child: Image.memory(
-                  avatarByte!,
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
+                  ),
+                  child: avatarByte == null
+                      ? SizedBox(
+                          child: Image.asset(
+                          'lib/assets/images/placeholder.png',
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                        ))
+                      : SizedBox(
+                          child: Image.memory(
+                            avatarByte!,
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                 ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(10, 10, 265, 0),
-              width: 70,
-              child: Text(
-                widget.user.name,
-                style: const TextStyle(
-                    fontFamily: 'PingFang SC', fontSize: 16 * 0.88),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(10, 10, 10, 49),
-              width: 325,
-              child: Text(
-                widget.user.description,
-                style: const TextStyle(
-                    fontFamily: 'PingFang SC',
-                    fontSize: 16 * 0.75,
-                    color: Color.fromRGBO(153, 153, 153, 100)),
-              ),
-            )
-          ],
-        ),
+              SizedBox(
+                child: ClipRRect(
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(10, 10, 265, 0),
+                        width: 70,
+                        child: Text(
+                          widget.user.name,
+                          style: const TextStyle(
+                              fontFamily: 'PingFang SC', fontSize: 16 * 0.88),
+                        ),
+                      ),
+                      Container(
+                        width: 325,
+                        child: Text(
+                          widget.user.description,
+                          style: const TextStyle(
+                              fontFamily: 'PingFang SC',
+                              fontSize: 16 * 0.75,
+                              color: Color.fromRGBO(153, 153, 153, 100)),
+                        ),
+                      )
+                    ],
+                  ),
+                  borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8),bottomRight: Radius.circular(8)),
+                ),
+              )
+            ],
+          ),
         ),
         onTap: () {
           _navigateToDetails(context);

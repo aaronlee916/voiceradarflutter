@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<UserModel> allUsers = [];
+  late List<UserModel> allUsers;
   bool isLoading = true; // 新增一个标志位来表示是否正在加载数据
 
   Future<void> getUsers() async {
@@ -21,8 +21,8 @@ class _HomePageState extends State<HomePage> {
       isLoading = true; // 开始加载数据
     });
     try {
-      var res = await http.get(
-          Uri.parse('https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAllUsers'));
+      var res = await http.get(Uri.parse(
+          'https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAllUsers'));
       if (res.statusCode == 200) {
         var decodedRes = json.decode(res.body);
         if (decodedRes is List) {
@@ -64,10 +64,18 @@ class _HomePageState extends State<HomePage> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator()) // 显示加载指示器
           : SingleChildScrollView(
-              child: Column(
-                children: allUsers.isEmpty
-                    ? [const Center(child: Text('No users found'))] // 如果没有用户，显示消息
-                    : allUsers.map((user) => wideUserCard(user: user)).toList(),
+              child: Container(
+                child: Center(
+                  child: Column(
+                    children: allUsers.isEmpty
+                        ? [
+                            const Center(child: Text('No users found'))
+                          ] // 如果没有用户，显示消息
+                        : allUsers
+                            .map((user) => wideUserCard(user: user))
+                            .toList(),
+                  ),
+                ),
               ),
             ),
       backgroundColor: const Color.fromRGBO(250, 253, 255, 100),
