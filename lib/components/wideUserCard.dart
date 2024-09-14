@@ -99,6 +99,7 @@ class _wideUserCardState extends State<wideUserCard> {
               ),
               SizedBox(
                 child: ClipRRect(
+                  borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8),bottomRight: Radius.circular(8)),
                   child: Column(
                     children: [
                       Container(
@@ -122,7 +123,6 @@ class _wideUserCardState extends State<wideUserCard> {
                       )
                     ],
                   ),
-                  borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8),bottomRight: Radius.circular(8)),
                 ),
               )
             ],

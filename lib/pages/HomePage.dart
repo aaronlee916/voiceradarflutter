@@ -64,17 +64,15 @@ class _HomePageState extends State<HomePage> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator()) // 显示加载指示器
           : SingleChildScrollView(
-              child: Container(
-                child: Center(
-                  child: Column(
-                    children: allUsers.isEmpty
-                        ? [
-                            const Center(child: Text('No users found'))
-                          ] // 如果没有用户，显示消息
-                        : allUsers
-                            .map((user) => wideUserCard(user: user))
-                            .toList(),
-                  ),
+              child: Center(
+                child: Column(
+                  children: allUsers.isEmpty
+                      ? [
+                          const Center(child: Text('No users found'))
+                        ] // 如果没有用户，显示消息
+                      : allUsers
+                          .map((user) => wideUserCard(user: user))
+                          .toList(),
                 ),
               ),
             ),

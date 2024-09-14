@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:voiceradarflutter/model/UserModel.dart';
 
 class artistDetail extends StatefulWidget {
-  final UserModel user;
-  Uint8List? avatarByte;
+  final dynamic user;
+  final Uint8List? avatarByte;
   artistDetail({super.key, required this.user, required this.avatarByte});
 
   @override
@@ -18,9 +18,9 @@ class _artistDetailState extends State<artistDetail> {
     return Scaffold(
       body: Column(
         children: [
-          Image.memory(widget.avatarByte!),
-          Text(widget.user.name),
-          Text(widget.user.description),
+          Image.memory(widget.avatarByte!,width: 100,height: 100,),
+          Text(widget.user['name']),
+          Text(widget.user['description']),
         ],
       ),
     );

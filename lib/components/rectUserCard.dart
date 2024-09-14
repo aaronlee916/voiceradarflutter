@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:voiceradarflutter/model/UserModel.dart';
-
+import 'package:voiceradarflutter/pages/artistDetail.dart';
 
 class rectUserCard extends StatefulWidget {
   final int id;
@@ -15,14 +16,71 @@ class rectUserCard extends StatefulWidget {
 }
 
 class _rectUserCardState extends State<rectUserCard> {
-  late UserModel user;
-  late Uint8List? avatar;
+  dynamic user = UserModel(
+      id: 0,
+      name: 'name',
+      phoneNumber: 'phoneNumber',
+      weiboLink: 'weiboLink',
+      qq: 'qq',
+      email: 'email',
+      avatarLink: 'avatarLink',
+      linkedUserId: 0,
+      isCV: true,
+      isStaff: true,
+      sex: 'sex',
+      voiceType: 'voiceType',
+      soundPressure: 'soundPressure',
+      demoLink: 'demoLink',
+      description: 'description',
+      genre: ['genre'],
+      functionType: ['functionType']);
+  Uint8List? avatar;
+
+void _navigateToDetails(BuildContext context) {
+    // 直接使用Navigator.push进行跳转，并传递参数
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => artistDetail(
+          user: user,
+          avatarByte: avatar,
+        ),
+      ),
+    );
+  }
+
+
 
   Future getUserInfo(int id) async {
-    var response = await http.get(Uri.parse("https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAllUsers"));
-    user=json.decode(response.body) as UserModel;
-    response=await http.get(Uri.parse("https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAvatar?id=${widget.id}"));
-    avatar=response.bodyBytes;
+    var response = await http.get(Uri.parse(
+        "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getUser?id=$id"));
+    user == null
+        ? user = UserModel(
+            id: 0,
+            name: 'name',
+            phoneNumber: 'phoneNumber',
+            weiboLink: 'weiboLink',
+            qq: 'qq',
+            email: 'email',
+            avatarLink: 'avatarLink',
+            linkedUserId: 0,
+            isCV: true,
+            isStaff: true,
+            sex: 'sex',
+            voiceType: 'voiceType',
+            soundPressure: 'soundPressure',
+            demoLink: 'demoLink',
+            description: 'description',
+            genre: ['genre'],
+            functionType: ['functionType'])
+        : setState(() {
+            user = json.decode(response.body);
+          });
+    response = await http.get(Uri.parse(
+        "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAvatar?id=$id"));
+    setState(() {
+      avatar = response.bodyBytes;
+    });
   }
 
   @override
@@ -34,13 +92,42 @@ class _rectUserCardState extends State<rectUserCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return GestureDetector(
+      child: Container(
+      width: 100,
+      height: 122,
+      margin: EdgeInsets.all(6),
       child: Column(
         children: [
-          Image.memory(avatar!),
-          Text(user.name)
+          avatar == null
+              ? SizedBox(
+                  child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(4)),
+                  child: Image.asset(
+                    'lib/assets/images/placeholder.png',
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  ),
+                ))
+              : SizedBox(
+                  child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(4)),
+                  child: Image.memory(
+                    avatar!,
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  ),
+                )),
+          Text(
+            user['name'],
+            style: const TextStyle(fontFamily: 'PingFang SC', fontSize: 12),
+          )
         ],
       ),
+    ),
+    onTap: () => _navigateToDetails(context),
     );
   }
 }

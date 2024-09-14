@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:voiceradarflutter/components/ArtistSearch.dart';
+import 'package:http/http.dart' as http;
+import 'package:voiceradarflutter/components/rectUserCard.dart';
+import 'package:voiceradarflutter/pages/artistDetail.dart';
 
 class findStaff extends StatefulWidget {
   const findStaff({super.key});
@@ -9,17 +14,40 @@ class findStaff extends StatefulWidget {
 }
 
 class _findStaffState extends State<findStaff> {
+  List<dynamic> trendingStaff = [];
+
+
+
+  Future getTrendingStaff() async {
+    var response = await http.get(Uri.parse(
+        "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getTrendingStaff"));
+    setState(() {
+      trendingStaff = json.decode(response.body);
+    });
+  }
+
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getTrendingStaff();
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          ArtistSearch(),
-          Text("人气STAFF")
-          
-        ],
-      ),
-      
+    return Column(
+      children: [
+        ArtistSearch(),
+        Text("人气Staff"),
+        Wrap(
+          children: trendingStaff.map((value) => rectUserCard(id: value)).toList(),
+        )
+      ],
     );
   }
 }
