@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MyHomePage(title: "你好")
+      home: const MyHomePage(title: "你好")
     );
   }
 }
@@ -41,10 +41,10 @@ class _MyHomePageState extends State<MyHomePage> {
     _pageController.jumpToPage(index);
   }
 
-  List<Widget> _pages = [
-    HomePage(),
-    Search(),
-    My(),
+  final List<Widget> _pages = [
+    const HomePage(),
+    const Search(),
+    const My(),
   ];
   int currTab = 0;
   @override

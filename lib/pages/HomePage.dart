@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:voiceradarflutter/components/wideUserCard.dart';
 import 'package:http/http.dart' as http;
 import 'package:voiceradarflutter/model/UserModel.dart';
@@ -14,11 +15,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late List<UserModel> allUsers;
-  bool isLoading = true; // 新增一个标志位来表示是否正在加载数据
+  bool isLoading = true;
 
   Future<void> getUsers() async {
     setState(() {
-      isLoading = true; // 开始加载数据
+      isLoading = true;
     });
     try {
       var res = await http.get(Uri.parse(
@@ -30,24 +31,24 @@ class _HomePageState extends State<HomePage> {
             allUsers = decodedRes
                 .map<UserModel>((item) => UserModel.fromJson(item))
                 .toList();
-            isLoading = false; // 数据加载完成
+            isLoading = false;
           });
         } else {
           print('Response is not a list');
           setState(() {
-            isLoading = false; // 加载失败，但不再显示加载状态
+            isLoading = false;
           });
         }
       } else {
         print('Failed to load users. Status code: ${res.statusCode}');
         setState(() {
-          isLoading = false; // 加载失败，但不再显示加载状态
+          isLoading = false;
         });
       }
     } catch (e) {
       print('Error fetching users: $e');
       setState(() {
-        isLoading = false; // 加载失败，但不再显示加载状态
+        isLoading = false;
       });
     }
   }
@@ -60,23 +61,43 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator()) // 显示加载指示器
-          : SingleChildScrollView(
-              child: Center(
-                child: Column(
-                  children: allUsers.isEmpty
-                      ? [
-                          const Center(child: Text('No users found'))
-                        ] // 如果没有用户，显示消息
-                      : allUsers
-                          .map((user) => wideUserCard(user: user))
-                          .toList(),
-                ),
+    return AnnotatedRegion(
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent, // 设置状态栏颜色为透明
+        statusBarBrightness: Brightness.dark, // 根据背景颜色设置状态栏图标亮度
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent, // 设置Scaffold背景颜色为透明
+        body: Stack(
+          children: <Widget>[
+            // 背景图片
+            Positioned.fill(
+              child: Image.asset(
+                'lib/assets/images/background.png',
+                fit: BoxFit.cover,
               ),
             ),
-      backgroundColor: const Color.fromRGBO(250, 253, 255, 100),
+            // 内容
+            SafeArea(
+              child: isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : SingleChildScrollView(
+                      child: Container(
+                        child: Center(
+                          child: Column(
+                            children: allUsers.isEmpty
+                                ? [const Center(child: Text('No users found'))]
+                                : allUsers
+                                    .map((user) => wideUserCard(user: user))
+                                    .toList(),
+                          ),
+                        ),
+                      ),
+                    ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -14,28 +14,59 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
   }
 
-@override
+  @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
     _tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: TabBar(
-          tabs: const [Tab(text: "找CV"), Tab(text: "找STAFF")],
-          controller: _tabController,
-        ),
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        children: <Widget>[
+          // Background image
+          Positioned.fill(
+            child: Image.asset(
+              'lib/assets/images/background.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          // Content
+          SafeArea(
+            child: Column(
+              children: <Widget>[
+                // TabBar
+                Container(
+                  color: Colors.transparent, // Optional: You can set a color or make it transparent
+                  child: TabBar(
+                    tabs: const [
+                      Tab(text: "找CV"),
+                      Tab(text: "找STAFF"),
+                    ],
+                    controller: _tabController,
+                  ),
+                ),
+                // TabBarView
+                Expanded(
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: const [
+                      findCV(),
+                      findStaff(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
-      body: TabBarView(controller: _tabController,children: const [findCV(), findStaff()],),
     );
   }
 }

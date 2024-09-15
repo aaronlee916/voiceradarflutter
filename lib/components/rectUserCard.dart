@@ -36,7 +36,7 @@ class _rectUserCardState extends State<rectUserCard> {
       functionType: ['functionType']);
   Uint8List? avatar;
 
-void _navigateToDetails(BuildContext context) {
+  void _navigateToDetails(BuildContext context) {
     // 直接使用Navigator.push进行跳转，并传递参数
     Navigator.push(
       context,
@@ -48,8 +48,6 @@ void _navigateToDetails(BuildContext context) {
       ),
     );
   }
-
-
 
   Future getUserInfo(int id) async {
     var response = await http.get(Uri.parse(
@@ -94,40 +92,40 @@ void _navigateToDetails(BuildContext context) {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-      width: 100,
-      height: 122,
-      margin: EdgeInsets.all(6),
-      child: Column(
-        children: [
-          avatar == null
-              ? SizedBox(
-                  child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(4)),
-                  child: Image.asset(
-                    'lib/assets/images/placeholder.png',
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.cover,
-                  ),
-                ))
-              : SizedBox(
-                  child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(4)),
-                  child: Image.memory(
-                    avatar!,
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.cover,
-                  ),
-                )),
-          Text(
-            user['name'],
-            style: const TextStyle(fontFamily: 'PingFang SC', fontSize: 12),
-          )
-        ],
+        width: 100,
+        height: 122,
+        margin: EdgeInsets.all(6),
+        child: Column(
+          children: [
+            avatar == null
+                ? SizedBox(
+                    child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(4)),
+                    child: Image.asset(
+                      'lib/assets/images/placeholder.png',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  ))
+                : SizedBox(
+                    child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(4)),
+                    child: Image.memory(
+                      avatar!,
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  )),
+            Text(
+              user['name'],
+              style: const TextStyle(fontFamily: 'PingFang SC', fontSize: 12),
+            )
+          ],
+        ),
       ),
-    ),
-    onTap: () => _navigateToDetails(context),
+      onTap: () => _navigateToDetails(context),
     );
   }
 }
