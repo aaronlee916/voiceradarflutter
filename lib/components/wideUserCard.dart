@@ -63,7 +63,7 @@ class _wideUserCardState extends State<wideUserCard> {
       child: GestureDetector(
         child: Container(
           width: 345,
-          height: 250,
+          height: 290,
           margin: EdgeInsets.only(bottom: 10),
           decoration: const BoxDecoration(boxShadow: [
             BoxShadow(
@@ -72,8 +72,8 @@ class _wideUserCardState extends State<wideUserCard> {
           child: Column(
             children: [
               SizedBox(
-                width: 21.56 * 16,
-                height: 8.81 * 16,
+                width: 345,
+                height: 141,
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(8),
@@ -98,8 +98,13 @@ class _wideUserCardState extends State<wideUserCard> {
                 ),
               ),
               SizedBox(
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8),bottomRight: Radius.circular(8)),
+                  child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(8),
+                    bottomRight: Radius.circular(8)),
+                child: Container(
+                  color: Colors.white,
+                  height: 149,
                   child: Column(
                     children: [
                       Container(
@@ -111,7 +116,7 @@ class _wideUserCardState extends State<wideUserCard> {
                               fontFamily: 'PingFang SC', fontSize: 16 * 0.88),
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: 325,
                         child: Text(
                           widget.user.description,
@@ -124,7 +129,7 @@ class _wideUserCardState extends State<wideUserCard> {
                     ],
                   ),
                 ),
-              )
+              ))
             ],
           ),
         ),
