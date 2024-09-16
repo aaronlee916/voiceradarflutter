@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
     return AnnotatedRegion(
       value: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent, // 设置状态栏颜色为透明
-        statusBarBrightness: Brightness.dark, // 根据背景颜色设置状态栏图标亮度
+        statusBarBrightness: Brightness.light, // 根据背景颜色设置状态栏图标亮度
       ),
       child: Container(
         decoration: const BoxDecoration(
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
         child: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.transparent,
-              leading: IconUser(),
+              leading: const IconUser(),
               ),
             body: SingleChildScrollView(
               child: Column(children: <Widget>[
