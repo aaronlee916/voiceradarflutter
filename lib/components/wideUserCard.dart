@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:voiceradarflutter/model/UserModel.dart';
-import 'package:voiceradarflutter/pages/artistDetail.dart';
+import 'package:voiceradarflutter/pages/ArtistDetail.dart';
 
 class wideUserCard extends StatefulWidget {
   final UserModel user;

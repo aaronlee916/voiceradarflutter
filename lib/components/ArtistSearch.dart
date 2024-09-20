@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class ArtistSearch extends StatefulWidget {
-  const ArtistSearch({super.key});
+  final String queryType;
+  const ArtistSearch({super.key, required this.queryType});
 
   @override
   State<ArtistSearch> createState() => _ArtistSearchState();
@@ -42,9 +44,14 @@ class _ArtistSearchState extends State<ArtistSearch> {
         ),
       ),
       style: TextStyle(color: Colors.grey[800]),
-      onSubmitted: (value) {
+      onSubmitted: (value) async {
         // 处理搜索逻辑
-        print('Search for: $value');
+        if(widget.queryType=="找CV"){
+          await http.get(Uri.parse('https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/searchCV'));
+        }
+        else if(widget.queryType=='找STAFF'){
+          await http.get(Uri.parse('https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/searchStaff'));
+        }
       },
     );
   }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:voiceradarflutter/components/ArtistSearch.dart';
 import 'package:http/http.dart' as http;
 import 'package:voiceradarflutter/components/rectUserCard.dart';
-import 'package:voiceradarflutter/pages/artistDetail.dart';
+import 'package:voiceradarflutter/pages/ArtistDetail.dart';
 
 class findStaff extends StatefulWidget {
   const findStaff({super.key});

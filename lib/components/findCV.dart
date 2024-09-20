@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:voiceradarflutter/components/ArtistSearch.dart';
 import 'package:http/http.dart' as http;
 import 'package:voiceradarflutter/components/rectUserCard.dart';
-import 'package:voiceradarflutter/pages/artistDetail.dart';
 
 class findCV extends StatefulWidget {
   const findCV({super.key});
