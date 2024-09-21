@@ -41,7 +41,7 @@ class _findCVState extends State<findCV> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ArtistSearch(),
+        ArtistSearch(queryType: '找CV'),
         Text("人气CV"),
         Wrap(
           children: trendingCV.map((value) => rectUserCard(id: value)).toList(),

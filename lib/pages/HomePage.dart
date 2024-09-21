@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:voiceradarflutter/components/IconUser.dart';
 import 'package:voiceradarflutter/components/wideUserCard.dart';
 import 'package:http/http.dart' as http;
+import 'package:voiceradarflutter/model/ArtistModel.dart';
 import 'package:voiceradarflutter/model/UserModel.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,7 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late List<UserModel> allUsers;
+  late List<ArtistModel> allUsers;
   bool isLoading = true;
 
   Future<void> getUsers() async {
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
         if (decodedRes is List) {
           setState(() {
             allUsers = decodedRes
-                .map<UserModel>((item) => UserModel.fromJson(item))
+                .map<ArtistModel>((item) => ArtistModel.fromJson(item))
                 .toList();
             isLoading = false;
           });

@@ -1,4 +1,4 @@
-class UserModel {
+class ArtistModel {
   final int id;
   final String name;
   final String phoneNumber;
@@ -16,7 +16,7 @@ class UserModel {
   final String description;
   final List<String> genre;
   final List<String> functionType;
-  UserModel(
+  ArtistModel(
       {required this.id,
       required this.name,
       required this.phoneNumber,
@@ -34,8 +34,8 @@ class UserModel {
       required this.description,
       required this.genre,
       required this.functionType});
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
+  factory ArtistModel.fromJson(Map<String, dynamic> json) {
+    return ArtistModel(
       id: json['id'],
       name: json['name'],
       phoneNumber: json['phoneNumber'],

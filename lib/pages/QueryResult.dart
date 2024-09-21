@@ -3,23 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:voiceradarflutter/components/IconUser.dart';
 import 'package:voiceradarflutter/components/wideUserCard.dart';
+import 'package:voiceradarflutter/model/ArtistModel.dart';
 import 'package:voiceradarflutter/model/UserModel.dart';
 import 'package:http/http.dart' as http;
 
 
-class SearchResult extends StatefulWidget {
-  final List<UserModel> queryResults;
-  const SearchResult({super.key, required this.queryResults});
+class QueryResult extends StatefulWidget {
+  final List<ArtistModel> queryResults;
+  const QueryResult({super.key, required this.queryResults});
 
   @override
-  State<SearchResult> createState() => _SearchResultState();
+  State<QueryResult> createState() => _QueryResultState();
 }
 
-class _SearchResultState extends State<SearchResult> {
+class _QueryResultState extends State<QueryResult> {
   bool isLoading = true;
-
   
-
   @override
   void initState() {
     super.initState();

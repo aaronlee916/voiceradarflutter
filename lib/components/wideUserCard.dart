@@ -3,13 +3,14 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:voiceradarflutter/model/ArtistModel.dart';
 import 'package:voiceradarflutter/model/UserModel.dart';
 import 'package:voiceradarflutter/pages/ArtistDetail.dart';
 
 class wideUserCard extends StatefulWidget {
-  final UserModel user;
+  final ArtistModel user;
 
-  const wideUserCard({super.key, required UserModel this.user});
+  const wideUserCard({super.key, required ArtistModel this.user});
 
   @override
   State<wideUserCard> createState() => _wideUserCardState();

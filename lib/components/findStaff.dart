@@ -42,7 +42,7 @@ class _findStaffState extends State<findStaff> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ArtistSearch(),
+        ArtistSearch(queryType: '找STAFF'),
         Text("人气Staff"),
         Wrap(
           children: trendingStaff.map((value) => rectUserCard(id: value)).toList(),
