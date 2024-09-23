@@ -32,11 +32,10 @@ class _HomePageState extends State<HomePage> {
           context, MaterialPageRoute(builder: (context) => const Login()));
     } else {
       var res = await http.get(Uri.parse(
-              "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/login")
+              "https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/login")
           .replace(
               queryParameters: {'name': currUser[0], 'password': currUser[1]}));
       token = prefs.getString('token');
-      print(token);
     }
   }
 
@@ -47,7 +46,7 @@ class _HomePageState extends State<HomePage> {
     try {
       var res = await http.get(
           Uri.parse(
-              'https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAllArtists'),
+              'https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/getAllArtists'),
           headers: {'authorization': 'Bearer ${token!}'});
       if (res.statusCode == 200) {
         var decodedRes = json.decode(res.body);
@@ -79,10 +78,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    await getLoginState();
-    await getArtists();
+    getLoginState();
+    getArtists();
   }
 
   @override
@@ -119,8 +118,8 @@ class _HomePageState extends State<HomePage> {
                                             child: Text('No users found'))
                                       ]
                                     : allUsers
-                                        .map((user) =>
-                                            wideArtistCard(artist: user))
+                                        .map((artist) =>
+                                            wideArtistCard(artist: artist))
                                         .toList(),
                               ),
                             ),

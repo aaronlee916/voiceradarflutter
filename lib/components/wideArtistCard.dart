@@ -41,7 +41,7 @@ class _wideArtistCardState extends State<wideArtistCard> {
   void getAvatar() async {
     try {
       var response = await http.get(Uri.parse(
-          "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAvatar?id=${widget.artist.id}"));
+          "https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/getAvatar?id=${widget.artist.id}"));
       if (response.statusCode == 200) {
         // Update the state with the new image data
         setState(() {
@@ -119,7 +119,7 @@ class _wideArtistCardState extends State<wideArtistCard> {
                       SizedBox(
                         width: 325,
                         child: Text(
-                          widget.artist.description,
+                          widget.artist.artistDescription,
                           style: const TextStyle(
                               fontFamily: 'PingFang SC',
                               fontSize: 16 * 0.75,

@@ -95,7 +95,7 @@ class _LoginState extends State<Login> {
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 15),
                               child: TextButton(
-                                  child: Text(
+                                  child: const Text(
                                     "立即注册",
                                     style: TextStyle(
                                         color:
@@ -117,7 +117,7 @@ class _LoginState extends State<Login> {
                                   capturedUsername = _userNameController.text;
                                   capturedPassword = _passwordController.text;
                                 });
-                                var res = await http.get(Uri.parse('https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/login').replace(queryParameters: {
+                                var res = await http.get(Uri.parse('https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/login').replace(queryParameters: {
                                   'name':capturedUsername,
                                   'password':capturedPassword
                                 }));

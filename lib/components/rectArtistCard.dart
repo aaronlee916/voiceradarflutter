@@ -18,7 +18,6 @@ class _rectUserCardState extends State<rectUserCard> {
   dynamic user = ArtistModel(
       id: 0,
       name: 'name',
-      phoneNumber: 'phoneNumber',
       weiboLink: 'weiboLink',
       qq: 'qq',
       email: 'email',
@@ -29,7 +28,7 @@ class _rectUserCardState extends State<rectUserCard> {
       voiceType: 'voiceType',
       soundPressure: 'soundPressure',
       demoLink: 'demoLink',
-      description: 'description',
+      artistDescription: 'description',
       genre: ['genre'],
       functionType: ['functionType']);
   Uint8List? avatar;
@@ -49,12 +48,11 @@ class _rectUserCardState extends State<rectUserCard> {
 
   Future getUserInfo(int id) async {
     var response = await http.get(Uri.parse(
-        "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getUser?id=$id"));
+        "https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/getUser?id=$id"));
     user == null
         ? user = ArtistModel(
             id: 0,
             name: 'name',
-            phoneNumber: 'phoneNumber',
             email: 'email',
             avatarLink: 'avatarLink',
             isCV: true,
@@ -63,7 +61,7 @@ class _rectUserCardState extends State<rectUserCard> {
             voiceType: 'voiceType',
             soundPressure: 'soundPressure',
             demoLink: 'demoLink',
-            description: 'description',
+            artistDescription: 'description',
             genre: ['genre'],
             functionType: ['functionType'], weiboLink: 'weiboLink', qq: 'qq')
         : setState(() {

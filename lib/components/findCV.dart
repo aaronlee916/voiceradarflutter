@@ -19,7 +19,7 @@ class _findCVState extends State<findCV> {
 
   Future getTrendingCV() async {
     var response = await http.get(Uri.parse(
-        "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getTrendingCV"));
+        "https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/getTrendingCV"));
     setState(() {
       trendingCV = json.decode(response.body);
     });

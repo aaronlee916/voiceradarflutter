@@ -51,14 +51,14 @@ class _ArtistSearchState extends State<ArtistSearch> {
         List<ArtistModel> queryResults = [];
         if (widget.queryType == "找CV") {
           var url = Uri.parse(
-              'https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/searchCV');
+              'https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/searchCV');
           url = url.replace(queryParameters: {'name': value});
           var response = await http.get(url);
           queryResults = json.decode(response.body);
           // 这里应该有逻辑来解析response并填充queryResults
         } else if (widget.queryType == '找STAFF') {
           var url = Uri.parse(
-              'https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/searchStaff');
+              'https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/searchStaff');
           url = url.replace(queryParameters: {'name': value});
           var response = await http.get(url);
           queryResults = json.decode(response.body);
