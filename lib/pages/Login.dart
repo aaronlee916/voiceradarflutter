@@ -99,7 +99,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 100, left: 20),
+                        padding: EdgeInsets.only(top: 110, left: 0),
                         child: IconButton(
                             onPressed: () {},
                             icon: Image(
