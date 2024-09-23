@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class artistDetail extends StatefulWidget {
-  final dynamic user;
+  final dynamic artist;
   final Uint8List? avatarByte;
-  artistDetail({super.key, required this.user, required this.avatarByte});
+  artistDetail({super.key, required this.artist, required this.avatarByte});
 
   @override
   State<artistDetail> createState() => _artistDetailState();
@@ -46,14 +46,14 @@ class _artistDetailState extends State<artistDetail> {
                 ),
                 Column(children: [
                   Text(
-                    widget.user.name + '\\' + widget.user.voiceType,
+                    widget.artist.name + '\\' + widget.artist.voiceType,
                     style: TextStyle(
                       fontSize: 14,
                       fontFamily: "PingFang SC",
                     ),
                   ),
                   Text(
-                    widget.user.description,
+                    widget.artist.description,
                     style: const TextStyle(
                         fontSize: 12,
                         fontFamily: "PingFang SC",

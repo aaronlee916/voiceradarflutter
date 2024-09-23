@@ -6,7 +6,6 @@ class ArtistModel {
   final String qq;
   final String email;
   final String avatarLink;
-  final int linkedUserId;
   final bool isCV;
   final bool isStaff;
   final String sex;
@@ -24,7 +23,6 @@ class ArtistModel {
       required this.qq,
       required this.email,
       required this.avatarLink,
-      required this.linkedUserId,
       required this.isCV,
       required this.isStaff,
       required this.sex,
@@ -43,7 +41,6 @@ class ArtistModel {
       qq: json['qq'],
       email: json['email'],
       avatarLink: json['avatarLink'],
-      linkedUserId: json['linkedUserId'],
       isCV: json['isCV'] ?? false,
       isStaff: json['isStaff'] ?? false,
       sex: json['sex'],

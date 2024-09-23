@@ -4,19 +4,18 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:voiceradarflutter/model/ArtistModel.dart';
-import 'package:voiceradarflutter/model/UserModel.dart';
 import 'package:voiceradarflutter/pages/ArtistDetail.dart';
 
-class wideUserCard extends StatefulWidget {
-  final ArtistModel user;
+class wideArtistCard extends StatefulWidget {
+  final ArtistModel artist;
 
-  const wideUserCard({super.key, required ArtistModel this.user});
+  const wideArtistCard({super.key, required ArtistModel this.artist});
 
   @override
-  State<wideUserCard> createState() => _wideUserCardState();
+  State<wideArtistCard> createState() => _wideArtistCardState();
 }
 
-class _wideUserCardState extends State<wideUserCard> {
+class _wideArtistCardState extends State<wideArtistCard> {
   File imageFile = new File('../assets/images/placeholder.png');
   Uint8List? avatarByte;
 
@@ -26,7 +25,7 @@ class _wideUserCardState extends State<wideUserCard> {
       context,
       MaterialPageRoute(
         builder: (context) => artistDetail(
-          user: widget.user,
+          artist: widget.artist,
           avatarByte: avatarByte,
         ),
       ),
@@ -42,7 +41,7 @@ class _wideUserCardState extends State<wideUserCard> {
   void getAvatar() async {
     try {
       var response = await http.get(Uri.parse(
-          "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAvatar?id=${widget.user.id}"));
+          "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAvatar?id=${widget.artist.id}"));
       if (response.statusCode == 200) {
         // Update the state with the new image data
         setState(() {
@@ -112,7 +111,7 @@ class _wideUserCardState extends State<wideUserCard> {
                         margin: const EdgeInsets.fromLTRB(10, 10, 265, 0),
                         width: 70,
                         child: Text(
-                          widget.user.name,
+                          widget.artist.name,
                           style: const TextStyle(
                               fontFamily: 'PingFang SC', fontSize: 16 * 0.88),
                         ),
@@ -120,7 +119,7 @@ class _wideUserCardState extends State<wideUserCard> {
                       SizedBox(
                         width: 325,
                         child: Text(
-                          widget.user.description,
+                          widget.artist.description,
                           style: const TextStyle(
                               fontFamily: 'PingFang SC',
                               fontSize: 16 * 0.75,

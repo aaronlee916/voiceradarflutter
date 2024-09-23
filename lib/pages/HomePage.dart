@@ -2,11 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:voiceradarflutter/components/IconUser.dart';
-import 'package:voiceradarflutter/components/wideUserCard.dart';
+import 'package:voiceradarflutter/components/wideArtistCard.dart';
 import 'package:http/http.dart' as http;
 import 'package:voiceradarflutter/model/ArtistModel.dart';
-import 'package:voiceradarflutter/model/UserModel.dart';
+import 'package:voiceradarflutter/pages/GeneralRegister.dart';
+import 'package:voiceradarflutter/pages/Login.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,6 +20,28 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late List<ArtistModel> allUsers;
   bool isLoading = true;
+  late String token;
+
+  Future<void> getLoginState()async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    //currUser[0]是用户名 currUser[1]是密码
+    final List<String>? currUser = await prefs.getStringList('user');
+    if(currUser==null){
+      AlertDialog(title: Text("登陆状态失效，请重新登录！"));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>const Login()));
+    }
+    else{
+      var res = await http.get(Uri.parse("https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/login").replace(queryParameters: {
+        'name':currUser[0],
+        'password':currUser[1]
+      }));
+      token = res.body;
+      print(token);
+    }
+  }
+
+
+
 
   Future<void> getUsers() async {
     setState(() {
@@ -25,7 +49,7 @@ class _HomePageState extends State<HomePage> {
     });
     try {
       var res = await http.get(Uri.parse(
-          'https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAllUsers'));
+          'https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAllUsers'),headers: {});
       if (res.statusCode == 200) {
         var decodedRes = json.decode(res.body);
         if (decodedRes is List) {
@@ -58,6 +82,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    getLoginState();
     getUsers();
   }
 
@@ -95,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                                             child: Text('No users found'))
                                       ]
                                     : allUsers
-                                        .map((user) => wideUserCard(user: user))
+                                        .map((user) => wideArtistCard(artist: user))
                                         .toList(),
                               ),
                             ),

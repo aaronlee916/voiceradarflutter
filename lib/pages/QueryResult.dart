@@ -2,10 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:voiceradarflutter/components/IconUser.dart';
-import 'package:voiceradarflutter/components/wideUserCard.dart';
+import 'package:voiceradarflutter/components/wideArtistCard.dart';
 import 'package:voiceradarflutter/model/ArtistModel.dart';
-import 'package:voiceradarflutter/model/UserModel.dart';
-import 'package:http/http.dart' as http;
 
 
 class QueryResult extends StatefulWidget {
@@ -58,7 +56,7 @@ class _QueryResultState extends State<QueryResult> {
                                             child: Text('No users found'))
                                       ]
                                     : widget.queryResults
-                                        .map((user) => wideUserCard(user: user))
+                                        .map((artist) => wideArtistCard(artist: artist))
                                         .toList(),
                               ),
                             ),

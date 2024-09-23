@@ -1,10 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:voiceradarflutter/model/UserModel.dart';
+import 'package:voiceradarflutter/model/ArtistModel.dart';
 import 'package:voiceradarflutter/pages/ArtistDetail.dart';
 
 class rectUserCard extends StatefulWidget {
@@ -16,7 +15,7 @@ class rectUserCard extends StatefulWidget {
 }
 
 class _rectUserCardState extends State<rectUserCard> {
-  dynamic user = UserModel(
+  dynamic user = ArtistModel(
       id: 0,
       name: 'name',
       phoneNumber: 'phoneNumber',
@@ -24,7 +23,6 @@ class _rectUserCardState extends State<rectUserCard> {
       qq: 'qq',
       email: 'email',
       avatarLink: 'avatarLink',
-      linkedUserId: 0,
       isCV: true,
       isStaff: true,
       sex: 'sex',
@@ -42,7 +40,7 @@ class _rectUserCardState extends State<rectUserCard> {
       context,
       MaterialPageRoute(
         builder: (context) => artistDetail(
-          user: user,
+          artist: user,
           avatarByte: avatar,
         ),
       ),
@@ -53,15 +51,12 @@ class _rectUserCardState extends State<rectUserCard> {
     var response = await http.get(Uri.parse(
         "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getUser?id=$id"));
     user == null
-        ? user = UserModel(
+        ? user = ArtistModel(
             id: 0,
             name: 'name',
             phoneNumber: 'phoneNumber',
-            weiboLink: 'weiboLink',
-            qq: 'qq',
             email: 'email',
             avatarLink: 'avatarLink',
-            linkedUserId: 0,
             isCV: true,
             isStaff: true,
             sex: 'sex',
@@ -70,7 +65,7 @@ class _rectUserCardState extends State<rectUserCard> {
             demoLink: 'demoLink',
             description: 'description',
             genre: ['genre'],
-            functionType: ['functionType'])
+            functionType: ['functionType'], weiboLink: 'weiboLink', qq: 'qq')
         : setState(() {
             user = json.decode(response.body);
           });
