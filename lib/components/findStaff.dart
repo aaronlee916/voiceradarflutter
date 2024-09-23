@@ -20,7 +20,7 @@ class _findStaffState extends State<findStaff> {
 
   Future getTrendingStaff() async {
     var response = await http.get(Uri.parse(
-        "https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/getTrendingStaff"));
+        "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getTrendingStaff"));
     setState(() {
       trendingStaff = json.decode(response.body);
     });

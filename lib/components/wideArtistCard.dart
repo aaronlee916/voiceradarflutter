@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:voiceradarflutter/model/ArtistModel.dart';
 import 'package:voiceradarflutter/pages/ArtistDetail.dart';
 
@@ -40,8 +41,9 @@ class _wideArtistCardState extends State<wideArtistCard> {
 
   void getAvatar() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
       var response = await http.get(Uri.parse(
-          "https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/getAvatar?id=${widget.artist.id}"));
+          "https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/getAvatar?id=${widget.artist.id}"),headers: {HttpHeaders.authorizationHeader:"Bearer ${prefs.get("token")}"});
       if (response.statusCode == 200) {
         // Update the state with the new image data
         setState(() {

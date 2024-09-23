@@ -15,22 +15,7 @@ class rectUserCard extends StatefulWidget {
 }
 
 class _rectUserCardState extends State<rectUserCard> {
-  dynamic user = ArtistModel(
-      id: 0,
-      name: 'name',
-      weiboLink: 'weiboLink',
-      qq: 'qq',
-      email: 'email',
-      avatarLink: 'avatarLink',
-      isCV: true,
-      isStaff: true,
-      sex: 'sex',
-      voiceType: 'voiceType',
-      soundPressure: 'soundPressure',
-      demoLink: 'demoLink',
-      artistDescription: 'description',
-      genre: ['genre'],
-      functionType: ['functionType']);
+  late ArtistModel user;
   Uint8List? avatar;
 
   void _navigateToDetails(BuildContext context) {
@@ -48,13 +33,12 @@ class _rectUserCardState extends State<rectUserCard> {
 
   Future getUserInfo(int id) async {
     var response = await http.get(Uri.parse(
-        "https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/getUser?id=$id"));
+        "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getUser?id=$id"));
     user == null
         ? user = ArtistModel(
-            id: 0,
+            id: "0",
             name: 'name',
             email: 'email',
-            avatarLink: 'avatarLink',
             isCV: true,
             isStaff: true,
             sex: 'sex',
@@ -62,8 +46,8 @@ class _rectUserCardState extends State<rectUserCard> {
             soundPressure: 'soundPressure',
             demoLink: 'demoLink',
             artistDescription: 'description',
-            genre: ['genre'],
-            functionType: ['functionType'], weiboLink: 'weiboLink', qq: 'qq')
+            genre: [],
+            functionType: [], weiboLink: 'weiboLink', qq: 'qq')
         : setState(() {
             user = json.decode(response.body);
           });
@@ -112,7 +96,7 @@ class _rectUserCardState extends State<rectUserCard> {
                     ),
                   )),
             Text(
-              user['name'],
+              user.name,
               style: const TextStyle(fontFamily: 'PingFang SC', fontSize: 12),
             )
           ],

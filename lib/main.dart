@@ -62,14 +62,13 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Scaffold(
             backgroundColor: Colors.transparent,
             body: PageView(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  currTab = index;
-                });
-              },
-              children: _pages,
-            ),
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() {
+                    currTab = index;
+                  });
+                },
+                children: _pages),
             bottomNavigationBar: BottomNavigationBar(
                 currentIndex: currTab,
                 onTap: _onItemTapped,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:voiceradarflutter/model/ArtistModel.dart';
 import 'package:voiceradarflutter/pages/GeneralRegister.dart';
 import 'package:voiceradarflutter/pages/Login.dart';
+import 'package:voiceradarflutter/pages/QueryResult.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,7 +20,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late List<ArtistModel> allUsers;
+  List<ArtistModel> allUsers = [];
   bool isLoading = true;
   String? token;
 
@@ -26,17 +28,36 @@ class _HomePageState extends State<HomePage> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     //currUser[0]是用户名 currUser[1]是密码
     final List<String>? currUser = prefs.getStringList('user');
-    if (currUser == null) {
+    token = prefs.getString('token');
+    if (token == null || !await checkTokenValidity(token)) {
       AlertDialog(title: Text("登陆状态失效，请重新登录！"));
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const Login()));
     } else {
       var res = await http.get(Uri.parse(
               "https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/login")
-          .replace(
-              queryParameters: {'name': currUser[0], 'password': currUser[1]}));
-      token = prefs.getString('token');
+          .replace(queryParameters: {
+        'name': currUser![0],
+        'password': currUser[1]
+      }));
+      token = res.body;
     }
+  }
+
+  Future<bool> checkTokenValidity(String? token) async {
+    var res = await http.get(
+        Uri.parse(
+            'https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAllArtists'),
+        headers: {HttpHeaders.authorizationHeader: 'Bearer ${token!}'});
+    if (res.statusCode != 200) {
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> bootWork() async {
+    await getLoginState();
+    await getArtists();
   }
 
   Future<void> getArtists() async {
@@ -46,8 +67,9 @@ class _HomePageState extends State<HomePage> {
     try {
       var res = await http.get(
           Uri.parse(
-              'https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/getAllArtists'),
-          headers: {'authorization': 'Bearer ${token!}'});
+              'https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAllArtists'),
+          headers: {HttpHeaders.authorizationHeader: 'Bearer ${token!}'});
+      
       if (res.statusCode == 200) {
         var decodedRes = json.decode(res.body);
         if (decodedRes is List) {
@@ -80,8 +102,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    getLoginState();
-    getArtists();
+    bootWork();
   }
 
   @override

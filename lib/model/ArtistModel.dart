@@ -1,9 +1,9 @@
-
 class Genre {
   final String id;
   final String genre;
 
   Genre({required this.id, required this.genre});
+  
   factory Genre.fromJson(Map<String, dynamic> json) {
     return Genre(
       id: json['id'],
@@ -17,6 +17,7 @@ class FunctionType {
   final String functionType;
 
   FunctionType({required this.id, required this.functionType});
+  
   factory FunctionType.fromJson(Map<String, dynamic> json) {
     return FunctionType(
       id: json['id'],
@@ -25,15 +26,12 @@ class FunctionType {
   }
 }
 
-
-
 class ArtistModel {
-  final int id;
+  final String id;
   final String name;
   final String weiboLink;
   final String qq;
   final String email;
-  final String avatarLink;
   final bool isCV;
   final bool isStaff;
   final String sex;
@@ -41,45 +39,45 @@ class ArtistModel {
   final String soundPressure;
   final String demoLink;
   final String artistDescription;
-  final List<Object> genre;
-  final List<Object> functionType;
-  ArtistModel(
-      {required this.id,
-      required this.name,
-      required this.weiboLink,
-      required this.qq,
-      required this.email,
-      required this.avatarLink,
-      required this.isCV,
-      required this.isStaff,
-      required this.sex,
-      required this.voiceType,
-      required this.soundPressure,
-      required this.demoLink,
-      required this.artistDescription,
-      required this.genre,
-      required this.functionType});
+  final List<String> genre;
+  final List<String> functionType;
+
+  ArtistModel({
+    required this.id,
+    required this.name,
+    required this.weiboLink,
+    required this.qq,
+    required this.email,
+    required this.isCV,
+    required this.isStaff,
+    required this.sex,
+    required this.voiceType,
+    required this.soundPressure,
+    required this.demoLink,
+    required this.artistDescription,
+    required this.genre,
+    required this.functionType,
+  });
+
   factory ArtistModel.fromJson(Map<String, dynamic> json) {
     return ArtistModel(
-      id: json['id'],
-      name: json['name'],
-      weiboLink: json['weiboLink'],
-      qq: json['qq'],
-      email: json['email'],
-      avatarLink: json['avatarLink'],
+      id: json['id'] as String,
+      name: json['name'] as String,
+      weiboLink: json['weiboLink'] as String,
+      qq: json['qq'] as String,
+      email: json['email'] as String,
       isCV: json['isCV'] ?? false,
       isStaff: json['isStaff'] ?? false,
-      sex: json['sex'],
-      voiceType: json['voiceType'],
-      soundPressure: json['soundPressure'],
-      demoLink: json['demoLink'],
-      artistDescription: json['artistDescription'],
-      genre: (json['genre'] as List<dynamic>? ?? [])
-          .map<Genre>((genreJson) => Genre.fromJson(genreJson))
+      sex: json['sex'] as String,
+      voiceType: json['voiceType'] as String,
+      soundPressure: json['soundPressure'] as String,
+      demoLink: json['demoLink'] as String,
+      artistDescription: json['artistDescription'] as String,
+      genre: (json['genre'] as List<dynamic>)
+          .map((genreJson) => Genre.fromJson(genreJson).genre)
           .toList(),
-      functionType: (json['functionType'] as List<dynamic>? ?? [])
-          .map<FunctionType>(
-              (functionTypeJson) => FunctionType.fromJson(functionTypeJson))
+      functionType: (json['functionType'] as List<dynamic>)
+          .map((functionTypeJson) => FunctionType.fromJson(functionTypeJson).functionType)
           .toList(),
     );
   }

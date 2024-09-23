@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:voiceradarflutter/main.dart';
 import 'package:voiceradarflutter/pages/HomePage.dart';
 
 class Login extends StatefulWidget {
@@ -117,7 +118,7 @@ class _LoginState extends State<Login> {
                                   capturedUsername = _userNameController.text;
                                   capturedPassword = _passwordController.text;
                                 });
-                                var res = await http.get(Uri.parse('https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/login').replace(queryParameters: {
+                                var res = await http.get(Uri.parse('https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/login').replace(queryParameters: {
                                   'name':capturedUsername,
                                   'password':capturedPassword
                                 }));
@@ -127,7 +128,7 @@ class _LoginState extends State<Login> {
                                   prefs.setString('token', token);
                                   prefs.setStringList('user', [capturedUsername,capturedPassword]);
                                   Fluttertoast.showToast(msg:"登陆成功！");
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomePage()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const MyApp()));
                                 }
                                 else{
                                   Fluttertoast.showToast(msg: "用户名或密码错误！");
