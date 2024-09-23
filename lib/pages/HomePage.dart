@@ -20,36 +20,35 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late List<ArtistModel> allUsers;
   bool isLoading = true;
-  late String token;
+  String? token;
 
-  Future<void> getLoginState()async{
+  Future<void> getLoginState() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     //currUser[0]是用户名 currUser[1]是密码
-    final List<String>? currUser = await prefs.getStringList('user');
-    if(currUser==null){
+    final List<String>? currUser = prefs.getStringList('user');
+    if (currUser == null) {
       AlertDialog(title: Text("登陆状态失效，请重新登录！"));
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>const Login()));
-    }
-    else{
-      var res = await http.get(Uri.parse("https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/login").replace(queryParameters: {
-        'name':currUser[0],
-        'password':currUser[1]
-      }));
-      token = res.body;
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const Login()));
+    } else {
+      var res = await http.get(Uri.parse(
+              "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/login")
+          .replace(
+              queryParameters: {'name': currUser[0], 'password': currUser[1]}));
+      token = prefs.getString('token');
       print(token);
     }
   }
 
-
-
-
-  Future<void> getUsers() async {
+  Future<void> getArtists() async {
     setState(() {
       isLoading = true;
     });
     try {
-      var res = await http.get(Uri.parse(
-          'https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAllUsers'),headers: {});
+      var res = await http.get(
+          Uri.parse(
+              'https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAllArtists'),
+          headers: {'authorization': 'Bearer ${token!}'});
       if (res.statusCode == 200) {
         var decodedRes = json.decode(res.body);
         if (decodedRes is List) {
@@ -66,7 +65,7 @@ class _HomePageState extends State<HomePage> {
           });
         }
       } else {
-        print('Failed to load users. Status code: ${res.statusCode}');
+        print('Failed to load artists. Status code: ${res.statusCode}');
         setState(() {
           isLoading = false;
         });
@@ -80,10 +79,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
-    getLoginState();
-    getUsers();
+    await getLoginState();
+    await getArtists();
   }
 
   @override
@@ -103,7 +102,7 @@ class _HomePageState extends State<HomePage> {
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               leading: const IconUser(),
-              ),
+            ),
             body: SingleChildScrollView(
               child: Column(children: <Widget>[
                 // 背景图片
@@ -120,7 +119,8 @@ class _HomePageState extends State<HomePage> {
                                             child: Text('No users found'))
                                       ]
                                     : allUsers
-                                        .map((user) => wideArtistCard(artist: user))
+                                        .map((user) =>
+                                            wideArtistCard(artist: user))
                                         .toList(),
                               ),
                             ),

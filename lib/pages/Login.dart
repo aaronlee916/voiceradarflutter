@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:voiceradarflutter/pages/HomePage.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -10,6 +14,10 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool accepted = false;
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  String capturedUsername = "";
+  String capturedPassword = "";
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +49,9 @@ class _LoginState extends State<Login> {
                 width: 275,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 28, left: 21),
-                  child: const TextField(
-                    decoration: InputDecoration(
+                  child: TextField(
+                    controller: _userNameController,
+                    decoration: const InputDecoration(
                         hintText: "请输入用户名", suffix: Icon(Icons.person)),
                   ),
                 ),
@@ -51,9 +60,10 @@ class _LoginState extends State<Login> {
                 width: 275,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 28, left: 21),
-                  child: const TextField(
+                  child: TextField(
+                    controller: _passwordController,
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         hintText: "请输入密码", suffix: Icon(Icons.visibility_off)),
                   ),
                 ),
@@ -92,7 +102,7 @@ class _LoginState extends State<Login> {
                                             Color.fromRGBO(156, 123, 248, 100)),
                                   ),
                                   onPressed: () {
-                                    //登录回调函数
+                                    //注册回调函数
                                   }),
                             ),
                           ],
@@ -101,7 +111,33 @@ class _LoginState extends State<Login> {
                       Padding(
                         padding: EdgeInsets.only(top: 110, left: 0),
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              if (accepted) {
+                                setState(() {
+                                  capturedUsername = _userNameController.text;
+                                  capturedPassword = _passwordController.text;
+                                });
+                                var res = await http.get(Uri.parse('https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/login').replace(queryParameters: {
+                                  'name':capturedUsername,
+                                  'password':capturedPassword
+                                }));
+                                String? token = res.body;
+                                if(res.statusCode==200 ){
+                                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                                  prefs.setString('token', token);
+                                  prefs.setStringList('user', [capturedUsername,capturedPassword]);
+                                  Fluttertoast.showToast(msg:"登陆成功！");
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomePage()));
+                                }
+                                else{
+                                  Fluttertoast.showToast(msg: "用户名或密码错误！");
+                                }
+                                
+                              }
+                              else{
+                                Fluttertoast.showToast(msg: "请阅读并同意用户协议！");
+                              }
+                            },
                             icon: Image(
                                 image: AssetImage(
                                     'lib/assets/images/loginButton.png'))),
