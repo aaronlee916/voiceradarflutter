@@ -10,67 +10,108 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool accepted = false;
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
-        value: const SystemUiOverlayStyle(
-          statusBarBrightness: Brightness.light,
-          statusBarColor: Colors.transparent,
-        ),
-        child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('lib/assets/images/login.png'),
-                fit: BoxFit.cover),
+      value: const SystemUiOverlayStyle(
+        statusBarBrightness: Brightness.light,
+        statusBarColor: Colors.transparent,
+      ),
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('lib/assets/images/login.png'),
+            fit: BoxFit.cover,
           ),
-          child: Material(
-            color: Colors.transparent,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 21, top: 158),
-                  child: Text(
-                    "中抓雷达",
-                    style: TextStyle(fontFamily: "PingFang SC", fontSize: 36),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 21, top: 158),
+                child: Text(
+                  "中抓雷达",
+                  style: TextStyle(fontFamily: "PingFang SC", fontSize: 36),
+                ),
+              ),
+              Container(
+                width: 275,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 28, left: 21),
+                  child: const TextField(
+                    decoration: InputDecoration(
+                        hintText: "请输入用户名", suffix: Icon(Icons.person)),
                   ),
                 ),
-                const TextField(
-                  decoration: InputDecoration(hintText: "请输入用户名",),
+              ),
+              Container(
+                width: 275,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 28, left: 21),
+                  child: const TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                        hintText: "请输入密码", suffix: Icon(Icons.visibility_off)),
+                  ),
                 ),
-                const TextField(
-                  decoration: InputDecoration(hintText: "请输入密码"),
-                ),
-                Row(
-                  children: [
-                    Container(
-                      width: 300,
-                      child: CheckboxListTile(
-                        value: accepted,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            accepted = !accepted;
-                          });
-                        },
-                        title: const Text(
-                          "请阅读并同意隐私协议",
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: Color.fromRGBO(153, 153, 153, 70)),
+              ),
+              Container(
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 21),
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              value: accepted,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  accepted = !accepted;
+                                });
+                              },
+                            ),
+                            const Text(
+                              "请阅读并同意隐私协议",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Color.fromRGBO(153, 153, 153, 70),
+                                letterSpacing: 0,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 15),
+                              child: TextButton(
+                                  child: Text(
+                                    "立即注册",
+                                    style: TextStyle(
+                                        color:
+                                            Color.fromRGBO(156, 123, 248, 100)),
+                                  ),
+                                  onPressed: () {
+                                    //登录回调函数
+                                  }),
+                            ),
+                          ],
                         ),
-                        controlAffinity: ListTileControlAffinity.leading,
                       ),
-                    ),
-                    const Text('立即注册',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Color.fromRGBO(156, 123, 248, 100),
-                        ))
-                  ],
-                )
-              ],
-            ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 100, left: 20),
+                        child: IconButton(
+                            onPressed: () {},
+                            icon: Image(
+                                image: AssetImage(
+                                    'lib/assets/images/loginButton.png'))),
+                      )
+                    ],
+                  )),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
