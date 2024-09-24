@@ -2,9 +2,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:voiceradarflutter/model/ArtistModel.dart';
 
 class artistDetail extends StatefulWidget {
-  final dynamic artist;
+  final ArtistModel artist;
   final Uint8List? avatarByte;
   artistDetail({super.key, required this.artist, required this.avatarByte});
 
@@ -53,11 +54,11 @@ class _artistDetailState extends State<artistDetail> {
                     ),
                   ),
                   Text(
-                    widget.artist.description,
+                    widget.artist.artistDescription,
                     style: const TextStyle(
                         fontSize: 12,
                         fontFamily: "PingFang SC",
-                        color: Color.fromRGBO( 153, 153, 153,70),
+                        color: Color.fromRGBO(153, 153, 153, 70),
                         fontWeight: FontWeight.w400),
                   )
                 ]),
@@ -76,9 +77,7 @@ class _artistDetailState extends State<artistDetail> {
                     color: Color.fromRGBO(156, 123, 248, 70),
                     child: Wrap(
                       direction: Axis.horizontal,
-                      children: [
-                        
-                      ],
+                      children: [],
                     ),
                   ),
                 )

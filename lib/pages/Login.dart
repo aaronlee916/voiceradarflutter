@@ -128,7 +128,7 @@ class _LoginState extends State<Login> {
                                   prefs.setString('token', token);
                                   prefs.setStringList('user', [capturedUsername,capturedPassword]);
                                   Fluttertoast.showToast(msg:"登陆成功！");
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const MyApp()));
+                                  Navigator.pop(context);
                                 }
                                 else{
                                   Fluttertoast.showToast(msg: "用户名或密码错误！");

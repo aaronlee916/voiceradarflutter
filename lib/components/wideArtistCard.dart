@@ -43,7 +43,7 @@ class _wideArtistCardState extends State<wideArtistCard> {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var response = await http.get(Uri.parse(
-          "https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/getAvatar?id=${widget.artist.id}"),headers: {HttpHeaders.authorizationHeader:"Bearer ${prefs.get("token")}"});
+          "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getArtistAvatar?id=${widget.artist.id}"),headers: {HttpHeaders.authorizationHeader:"Bearer ${prefs.get("token")}"});
       if (response.statusCode == 200) {
         // Update the state with the new image data
         setState(() {
