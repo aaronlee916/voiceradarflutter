@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
         if (decodedRes is List) {
           setState(() {
             allUsers = decodedRes
-                .map<ArtistModel>((item) => ArtistModel.fromJson(item))
+                .map<ArtistModel>((item) => ArtistModel(id: item["id"], name: item["name"], weiboLink: item["weiboLink"], qq: item["qq"], email: item["email"], isCV: item["isCV"], isStaff: item["isStaff"], sex: item["sex"], voiceType: item["voiceType"], soundPressure: item["soundPressure"], demoLink: item["demoLink"], artistDescription: item["artistDescription"], genre: item["genre"], functionType: item["functionType"]))
                 .toList();
             isLoading = false;
           });

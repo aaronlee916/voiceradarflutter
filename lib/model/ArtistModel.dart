@@ -1,5 +1,5 @@
 class Genre {
-  final String id;
+  final int id;
   final String genre;
 
   Genre({required this.id, required this.genre});
@@ -13,7 +13,7 @@ class Genre {
 }
 
 class FunctionType {
-  final String id;
+  final int id;
   final String functionType;
 
   FunctionType({required this.id, required this.functionType});
@@ -27,7 +27,7 @@ class FunctionType {
 }
 
 class ArtistModel {
-  final String id;
+  final int id;
   final String name;
   final String weiboLink;
   final String qq;
@@ -39,8 +39,8 @@ class ArtistModel {
   final String soundPressure;
   final String demoLink;
   final String artistDescription;
-  final List<String> genre;
-  final List<String> functionType;
+  final List<dynamic> genre;
+  final List<dynamic> functionType;
 
   ArtistModel({
     required this.id,
@@ -61,7 +61,7 @@ class ArtistModel {
 
   factory ArtistModel.fromJson(Map<String, dynamic> json) {
     return ArtistModel(
-      id: json['id'] as String,
+      id: json['id'],
       name: json['name'] as String,
       weiboLink: json['weiboLink'] as String,
       qq: json['qq'] as String,

@@ -34,23 +34,9 @@ class _rectUserCardState extends State<rectUserCard> {
   Future getUserInfo(int id) async {
     var response = await http.get(Uri.parse(
         "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getUser?id=$id"));
-    user == null
-        ? user = ArtistModel(
-            id: "0",
-            name: 'name',
-            email: 'email',
-            isCV: true,
-            isStaff: true,
-            sex: 'sex',
-            voiceType: 'voiceType',
-            soundPressure: 'soundPressure',
-            demoLink: 'demoLink',
-            artistDescription: 'description',
-            genre: [],
-            functionType: [], weiboLink: 'weiboLink', qq: 'qq')
-        : setState(() {
-            user = json.decode(response.body);
-          });
+    setState(() {
+      user = json.decode(response.body);
+    });
     response = await http.get(Uri.parse(
         "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAvatar?id=$id"));
     setState(() {
