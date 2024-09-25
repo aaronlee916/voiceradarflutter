@@ -33,30 +33,31 @@ class _wideArtistCardState extends State<wideArtistCard> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getAvatar();
-  }
-
   void getAvatar() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var response = await http.get(Uri.parse(
-          "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getArtistAvatar?id=${widget.artist.id}"),headers: {HttpHeaders.authorizationHeader:"Bearer ${prefs.get("token")}"});
+      var response = await http.get(
+          Uri.parse(
+              "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getArtistAvatar?id=${widget.artist.id}"),
+          headers: {
+            HttpHeaders.authorizationHeader: "Bearer ${prefs.get("token")}"
+          });
       if (response.statusCode == 200) {
-        // Update the state with the new image data
         setState(() {
           avatarByte = response.bodyBytes;
         });
       } else {
-        // Handle the error response
         print('Failed to load avatar: ${response.statusCode}');
       }
     } catch (e) {
-      // Handle any exceptions
       print('An error occurred while getting the avatar: $e');
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getAvatar();
   }
 
   @override

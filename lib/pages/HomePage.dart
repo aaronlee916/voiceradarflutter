@@ -69,13 +69,27 @@ class _HomePageState extends State<HomePage> {
           Uri.parse(
               'https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getAllArtists'),
           headers: {HttpHeaders.authorizationHeader: 'Bearer ${token!}'});
-      
+      print(token);
       if (res.statusCode == 200) {
         var decodedRes = json.decode(res.body);
         if (decodedRes is List) {
           setState(() {
             allUsers = decodedRes
-                .map<ArtistModel>((item) => ArtistModel(id: item["id"], name: item["name"], weiboLink: item["weiboLink"], qq: item["qq"], email: item["email"], isCV: item["isCV"], isStaff: item["isStaff"], sex: item["sex"], voiceType: item["voiceType"], soundPressure: item["soundPressure"], demoLink: item["demoLink"], artistDescription: item["artistDescription"], genre: item["genre"], functionType: item["functionType"]))
+                .map<ArtistModel>((item) => ArtistModel(
+                    id: item["id"],
+                    name: item["name"],
+                    weiboLink: item["weiboLink"],
+                    qq: item["qq"],
+                    email: item["email"],
+                    isCV: item["isCV"],
+                    isStaff: item["isStaff"],
+                    sex: item["sex"],
+                    voiceType: item["voiceType"],
+                    soundPressure: item["soundPressure"],
+                    demoLink: item["demoLink"],
+                    artistDescription: item["artistDescription"],
+                    genre: item["genre"],
+                    functionType: item["functionType"]))
                 .toList();
             isLoading = false;
           });
@@ -109,8 +123,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return AnnotatedRegion(
       value: const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent, // 设置状态栏颜色为透明
-        statusBarBrightness: Brightness.light, // 根据背景颜色设置状态栏图标亮度
+        statusBarColor: Colors.transparent,
+        statusBarBrightness: Brightness.light,
       ),
       child: Container(
         decoration: const BoxDecoration(

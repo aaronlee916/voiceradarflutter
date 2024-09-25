@@ -38,6 +38,7 @@ class _artistDetailState extends State<artistDetail> {
               backgroundColor: Colors.transparent,
             ),
             body: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Image.memory(
                   widget.avatarByte!,
@@ -46,28 +47,46 @@ class _artistDetailState extends State<artistDetail> {
                   fit: BoxFit.cover,
                 ),
                 Column(children: [
-                  Text(
-                    widget.artist.name + '\\' + widget.artist.voiceType,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontFamily: "PingFang SC",
+                  Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        widget.artist.name + '\\' + widget.artist.voiceType,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: "PingFang SC",
+                        ),
+                      ),
                     ),
                   ),
-                  Text(
-                    widget.artist.artistDescription,
-                    style: const TextStyle(
-                        fontSize: 12,
-                        fontFamily: "PingFang SC",
-                        color: Color.fromRGBO(153, 153, 153, 70),
-                        fontWeight: FontWeight.w400),
-                  )
+                  Padding(
+                    padding: EdgeInsets.only(left:15),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        widget.artist.artistDescription,
+                        style: const TextStyle(
+                            fontSize: 12,
+                            fontFamily: "PingFang SC",
+                            color: Color.fromRGBO(153, 153, 153, 70),
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                  ),
                 ]),
-                const Text(
-                  "声线展示",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontFamily: "PingFang SC",
-                      fontWeight: FontWeight.w400),
+                Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: const Text(
+                      "声线展示",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: "PingFang SC",
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ),
                 ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(4),
@@ -80,6 +99,19 @@ class _artistDetailState extends State<artistDetail> {
                       children: [],
                     ),
                   ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                    "联系方式",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: "PingFang SC",
+                    ),
+                  ),
+                  )
                 )
               ],
             ),
