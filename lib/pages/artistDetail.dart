@@ -48,12 +48,12 @@ class _artistDetailState extends State<artistDetail> {
                 ),
                 Column(children: [
                   Padding(
-                    padding: EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(15),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
                         widget.artist.name + '\\' + widget.artist.voiceType,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                           fontFamily: "PingFang SC",
                         ),
@@ -61,7 +61,7 @@ class _artistDetailState extends State<artistDetail> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left:15),
+                    padding: const EdgeInsets.only(left: 15),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -75,11 +75,11 @@ class _artistDetailState extends State<artistDetail> {
                     ),
                   ),
                 ]),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(15),
                   child: Align(
                     alignment: Alignment.topLeft,
-                    child: const Text(
+                    child: Text(
                       "声线展示",
                       style: TextStyle(
                           fontSize: 14,
@@ -93,26 +93,74 @@ class _artistDetailState extends State<artistDetail> {
                   child: Container(
                     width: 345,
                     height: 59,
-                    color: Color.fromRGBO(156, 123, 248, 70),
+                    color: const Color.fromRGBO(156, 123, 248, 70),
                     child: Wrap(
                       direction: Axis.horizontal,
-                      children: [],
+                      children: [
+                        Row(
+                          children: [
+                            const Text("声展"),
+                            IconButton(
+                                onPressed: () {
+                                  
+                                },
+                                icon: const Image(
+                                    image: AssetImage(
+                                        'lib/assets/images/play.png')))
+                          ],
+                        )
+                      ],
                     ),
                   ),
                 ),
+                const Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "联系方式",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: "PingFang SC",
+                        ),
+                      ),
+                    )),
                 Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                    "联系方式",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontFamily: "PingFang SC",
-                    ),
-                  ),
-                  )
-                )
+                    padding: const EdgeInsets.all(15),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "邮箱：${widget.artist.email}",
+                        style: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: "PingFang HK",
+                            color: Color.fromRGBO(153, 153, 153, 100)),
+                      ),
+                    )),
+                Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "QQ：${widget.artist.qq}",
+                        style: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: "PingFang HK",
+                            color: Color.fromRGBO(153, 153, 153, 100)),
+                      ),
+                    )),
+                Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "微博链接：${widget.artist.weiboLink}",
+                        style: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: "PingFang HK",
+                            color: Color.fromRGBO(153, 153, 153, 100)),
+                      ),
+                    )),
               ],
             ),
           )),
