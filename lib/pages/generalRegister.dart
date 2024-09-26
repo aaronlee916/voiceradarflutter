@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image/image.dart';
 
 class GeneralRegister extends StatefulWidget {
   const GeneralRegister({super.key});
@@ -9,13 +10,6 @@ class GeneralRegister extends StatefulWidget {
 }
 
 class _GeneralRegisterState extends State<GeneralRegister> {
-
-  ValueChanged<int> onSelectionChanged(){
-    return 
-  }
-
-
-
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
@@ -45,8 +39,12 @@ class _GeneralRegisterState extends State<GeneralRegister> {
                     ),
                   ),
                 ),
-                const TextField(
-                  decoration: InputDecoration(hintText: "请输入手机号"),
+                Container(
+                  width: 345,
+                  height: 39,
+                  child: const TextField(
+                    decoration: InputDecoration(hintText: "请输入手机号"),
+                  ),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(left: 15),
@@ -98,10 +96,13 @@ class _GeneralRegisterState extends State<GeneralRegister> {
                   obscureText: true,
                   decoration: InputDecoration(hintText: "请输入密码"),
                 ),
-                const Radio(value: 0, groupValue: 0, onChanged: ),
-                ElevatedButton(onPressed: (){
-
-                }, child: const Text("下一步"))
+                // const Radio(value: 0, groupValue: 0, onChanged: ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text("下一步"),
+                  style: ButtonStyle(
+                      ),
+                )
               ],
             )));
   }
