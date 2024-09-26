@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
           context, MaterialPageRoute(builder: (context) => const Login()));
     } else {
       var res = await http.get(Uri.parse(
-              "https://voiceradar-ergxdlfdwj.cn-beijing.fcapp.run/v1/login")
+              "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/login")
           .replace(queryParameters: {
         'name': currUser![0],
         'password': currUser[1]
@@ -132,6 +132,7 @@ class _HomePageState extends State<HomePage> {
               image: AssetImage('lib/assets/images/background.png'),
               fit: BoxFit.cover),
         ),
+        
         child: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.transparent,

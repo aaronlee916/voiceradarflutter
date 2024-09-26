@@ -32,7 +32,7 @@ class _artistDetailState extends State<artistDetail> {
             appBar: AppBar(
               leading: BackButton(
                 onPressed: () {
-                  Navigator.pop(context); // 实现返回功能
+                  Navigator.pop(context);
                 },
               ),
               backgroundColor: Colors.transparent,
