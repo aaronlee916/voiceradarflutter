@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -74,6 +76,7 @@ class _MyState extends State<My> {
     String token = await prefs.get('token') as String;
     username=user[0];
     password=user[1];
-    artist=await http.get('')
+    var res=await http.get(Uri.parse('https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getArtist?id=${await prefs.getInt('userId')}'));
+    artist=json.decode(res.body);
   }
 }

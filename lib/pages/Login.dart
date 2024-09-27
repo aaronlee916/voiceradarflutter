@@ -21,6 +21,20 @@ class _LoginState extends State<Login> {
   String capturedUsername = "";
   String capturedPassword = "";
 
+  void getId(String username, String password) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var res = await http.get(Uri.parse(
+        "https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/getUserId?username=${username}&password=${password}"));
+    prefs.setInt('userId', res.body as int);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
@@ -104,7 +118,11 @@ class _LoginState extends State<Login> {
                                             Color.fromRGBO(156, 123, 248, 100)),
                                   ),
                                   onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const GeneralRegister()));//注册回调函数
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const GeneralRegister())); //注册回调函数
                                   }),
                             ),
                           ],
@@ -119,28 +137,30 @@ class _LoginState extends State<Login> {
                                   capturedUsername = _userNameController.text;
                                   capturedPassword = _passwordController.text;
                                 });
-                                var res = await http.get(Uri.parse('https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/login').replace(queryParameters: {
-                                  'name':capturedUsername,
-                                  'password':capturedPassword
+                                var res = await http.get(Uri.parse(
+                                        'https://voiceradar-ergxdlfdwj.cn-shanghai.fcapp.run/v1/login')
+                                    .replace(queryParameters: {
+                                  'name': capturedUsername,
+                                  'password': capturedPassword
                                 }));
                                 String? token = res.body;
-                                if(res.statusCode==200 ){
-                                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                                if (res.statusCode == 200) {
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
                                   prefs.setString('token', token);
-                                  prefs.setStringList('user', [capturedUsername,capturedPassword]);
-                                  Fluttertoast.showToast(msg:"登陆成功！");
+                                  prefs.setStringList('user',
+                                      [capturedUsername, capturedPassword]);
+                                  getId(capturedUsername, capturedPassword);
+                                  Fluttertoast.showToast(msg: "登陆成功！");
                                   Navigator.pop(context);
-                                }
-                                else{
+                                } else {
                                   Fluttertoast.showToast(msg: "用户名或密码错误！");
                                 }
-                                
-                              }
-                              else{
+                              } else {
                                 Fluttertoast.showToast(msg: "请阅读并同意用户协议！");
                               }
                             },
-                            icon: Image(
+                            icon: const Image(
                                 image: AssetImage(
                                     'lib/assets/images/loginButton.png'))),
                       )
